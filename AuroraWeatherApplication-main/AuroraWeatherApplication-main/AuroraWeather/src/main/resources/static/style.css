@@ -1,0 +1,752 @@
+:root {
+    --primary-color-day: #125af5;
+    --text-color-day: #212529;
+    --card-bg-day: rgba(138, 187, 239, 0.962);
+    --primary-color-night: #1a233a;
+    --text-color-night: #e6e3ed;
+    --card-bg-night: rgba(44, 62, 80, 0.8);
+}
+html { height: 100%; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    background-image: url('https://static.vecteezy.com/system/resources/thumbnails/012/877/834/small/a-good-day-covered-with-lots-of-sky-and-clouds-background-with-copy-space-for-text-or-banner-for-website-free-photo.JPG');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-color-day);
+    transition: background-image 0.5s ease-in-out, color 0.3s;
+    background-repeat: repeat-x;
+    animation: moveClouds 200s linear infinite;
+}
+body.dark-mode {
+    background-image: url('https://img.freepik.com/free-vector/gradient-galaxy-background_23-2148974619.jpg');
+    color: var(--text-color-night);
+    background-repeat: repeat;
+    animation: moveStars 300s linear infinite;
+}
+@keyframes moveClouds { from { background-position: 0 0; } to { background-position: 10000px 0; } }
+@keyframes moveStars { from { background-position: 0 0; } to { background-position: -10000px 5000px; } }
+
+.app-header { background-color: var(--primary-color-day); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.header-title { display: flex; align-items: center; gap: 15px; font-size: 1.2rem; }
+.header-title h1 { margin: 0; }
+.theme-toggle-button { background-color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--primary-color-day); }
+
+/* UPDATED: Styles for the new nav bar layout and profile menu */
+.app-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 25px;
+    background-color: var(--card-bg-day);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.nav-links { display: flex; gap: 5px; }
+.nav-actions { display: flex; align-items: center; gap: 15px; }
+
+.nav-button { 
+    text-decoration: none; 
+    color: var(--text-color-day); 
+    padding: 8px 16px; 
+    border-radius: 20px; 
+    border: 1px solid transparent; 
+    transition: 0.3s; 
+}
+
+/* Hover effect for non-active buttons */
+.nav-button:not(.active):hover { 
+    background-color: #e6f0ff; /* light blue background */
+    color: #007bff; /* blue text */
+}
+
+/* Active button */
+.nav-button.active { 
+    background-color: var(--primary-color-day); 
+    color: white; /* text stays white */
+    border-color: var(--primary-color-day); 
+}
+
+/* Hover effect on active button */
+.nav-button.active:hover { 
+    background-color: #0056b3; /* darker blue background */
+    color: white; /* text stays white */
+}
+
+.nav-auth-btn { 
+    background: none; 
+    border: none; 
+    font-size: 1rem; 
+    color: var(--text-color-day); 
+    cursor: pointer; 
+    font-weight: 500; 
+}
+
+body.dark-mode .nav-auth-btn { 
+    color: var(--text-color-night); 
+}
+
+.profile-menu { position: relative; }
+
+.profile-btn {
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 320px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    overflow: hidden;
+    z-index: 100;
+}
+.profile-header {
+    background: #e9ecef; padding: 20px; text-align: center;
+}
+.profile-avatar { width: 50px; height: 50px; border-radius: 50%; background: #6c5ce7; color: white; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto; }
+.profile-name { font-weight: bold; color: #212529; display: block; }
+.profile-email { color: #6c757d; }
+.profile-options, .profile-footer { padding: 10px 0; }
+.profile-option { display: flex; align-items: center; padding: 12px 20px; text-decoration: none; color: #343a40; transition: background-color 0.2s; }
+.profile-option:hover { background-color: #e9ecef; }
+.profile-option i { width: 25px; margin-right: 15px; text-align: center; color: #495057; }
+.profile-divider { border: 0; height: 1px; background-color: #dee2e6; margin: 0; }
+
+/* (All your other styles are preserved) */
+.main-content { flex-grow: 1; padding: 30px; }
+.page { display: none; animation: fadeIn 0.5s; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.weather-form { display: flex; gap: 10px; max-width: 500px; margin: 0 auto 30px auto; }
+.weather-form input { flex-grow: 1; padding: 12px; font-size: 1rem; border: 1px solid #ccc; border-radius: 25px; }
+.weather-form button { padding: 12px 20px; font-size: 1rem; background-color: #f8f9fa; color: #333; border: 1px solid #333; border-radius: 25px; cursor: pointer; }
+#weather-result-container, .content-card { background: var(--card-bg-day); backdrop-filter: blur(10px); border-radius: 15px; padding: 25px; max-width: 800px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.placeholder-text { text-align: center; color: #6c757d; }
+.weather-map { border: none; border-radius: 10px; width: 100%; }
+.app-footer { width: 100%; padding: 20px 0; background-color: rgba(0,0,0,0.1); backdrop-filter: blur(5px); text-align: center; margin-top: auto; }
+.social-links a { color: var(--text-color-day); font-size: 1.8rem; margin: 0 15px; }
+.location-details-list, .contact-details-list { list-style: none; padding: 0; margin-top: 20px; }
+.location-details-list li, .contact-details-list li { padding: 12px 0; display: flex; align-items: center; font-size: 1.1rem; border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+.location-details-list li i, .contact-details-list li i { margin-right: 15px; font-size: 1.2rem; width: 25px; text-align: center; color: var(--primary-color-day); }
+
+body.dark-mode {
+    --primary-color-day: #1a233a;
+    --text-color-day: #e0e0e0;
+    --card-bg-day: rgba(44, 62, 80, 0.8);
+    --primary-color-night: #007bff;
+    --text-color-night: #f1f2f3;
+    --card-bg-night: rgba(255, 255, 255, 0.85);
+}
+
+/* ===== MapWeather Search Styling ===== */
+.map-search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0 20px;
+  gap: 10px;
+}
+
+.map-search-input {
+  flex: 1;
+  max-width: 400px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.map-search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0px 0px 6px rgba(0, 123, 255, 0.4);
+  outline: none;
+}
+
+.map-btn {
+  padding: 10px 18px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  background: #007bff;
+  color: #fff;
+  transition: background 0.3s;
+}
+
+.map-btn:hover {
+  background: #0056b3;
+}
+
+.map-btn.clear {
+  background: #6c757d;
+}
+
+.map-btn.clear:hover {
+  background: #5a6268;
+}
+/* --- About Location Box --- */
+#about-location-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 50px;
+  background: #fbfcfc;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(41, 35, 35, 0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+/* --- PASTE THIS NEW CODE INTO YOUR style.css FILE --- */
+
+/* Styling for the Details Lists (Used for About Location and Contact) */
+.location-details-list, .contact-details-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+.location-details-list li, .contact-details-list li {
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.location-details-list li:last-child, .contact-details-list li:last-child {
+    border-bottom: none;
+}
+.location-details-list li i, .contact-details-list li i {
+    margin-right: 15px;
+    font-size: 1.2rem;
+    width: 25px;
+    text-align: center;
+    color: var(--primary-color-day);
+}
+
+/* UPDATED Styles specifically for the "About Location" page */
+#about-location-container h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+#about-location-container .location-details-list li {
+    padding: 18px 5px; /* Adds the vertical spacing from the screenshot */
+    font-size: 1rem;
+    color: #333;
+}
+#about-location-container .location-details-list li i {
+    color: var(--primary-color-day);
+    width: 40px; /* Aligns icons neatly */
+    font-size: 1.3rem;
+}
+
+body.dark-mode #about-location-container .location-details-list li {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-color-night);
+}
+body.dark-mode #about-location-container .location-details-list li i {
+    color: #5b81a7;
+}
+
+/* --- END OF CSS SNIPPET --- */
+
+body.dark-mode #about-location-container {
+  background: #2a2a2a;
+  color: #f1f1f1;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+}
+
+#about-location-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
+body.dark-mode #about-location-container h2 {
+  color: #fff;
+}
+
+.location-details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.location-details-list li {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+body.dark-mode .location-details-list li {
+  border-bottom: 1px solid #444;
+}
+
+.location-details-list li i {
+  margin-right: 10px;
+  color: #44a9dc;
+}
+
+body.dark-mode .location-details-list li i {
+  color: #66aaff;
+}
+
+.location-details-list li:last-child {
+  border-bottom: none;
+}
+/* --- Contact Form Styling --- */
+.contact-form-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+body.dark-mode .contact-form-container {
+  background: #2a2a2a;
+  color: #f1f1f1;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+}
+
+.contact-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+body.dark-mode .contact-form-container h2 {
+  color: #fff;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+body.dark-mode .contact-form label {
+  color: #ddd;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.dark-mode .contact-form input,
+body.dark-mode .contact-form textarea {
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #f1f1f1;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+.contact-form textarea {
+  resize: none;
+  min-height: 120px;
+}
+
+.contact-form button {
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: hsl(210, 99%, 50%);
+  color: #fff;
+  transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+  background: #0056b3;
+}
+
+
+/* ==============================
+   Global Styles
+============================== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    transition: background 0.3s, color 0.3s;
+}
+
+.dark-mode {
+    background: #1e1e1e;
+    color: #f5f5f5;
+}
+
+/* ==============================
+   Header & Navigation
+============================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0077ff;
+    color: white;
+    padding: 10px 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: background 0.3s;
+}
+
+.nav-button:hover,
+.nav-button.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* ==============================
+   Pages
+============================== */
+.page {
+    display: none;
+    padding: 20px;
+}
+
+.page.active {
+    display: block;
+}
+
+/* ==============================
+   Weather Container
+============================== */
+#weather-result-container {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: background 0.3s, color 0.3s;
+}
+
+.dark-mode #weather-result-container {
+    background: #2a2a2a;
+}
+
+/* ==============================
+   About Location Container
+============================== */
+#about-location-container {
+    margin-top: 20px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, color 0.3s;
+}
+
+.dark-mode #about-location-container {
+    background: #2c2c2c;
+}
+
+#about-location-container h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #0077ff;
+    text-align: center;
+}
+
+.location-details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.location-details-list li {
+    font-size: 1rem;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.dark-mode .location-details-list li {
+    border-bottom: 1px solid #444;
+}
+
+
+
+/* ==============================
+   Contact Form Box (like About Location)
+*/
+
+
+
+.contact-container {
+    margin-top: 20px;
+    padding: 50px 30px;
+    background: #fbfcfc;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(41, 35, 35, 0.1);
+    transition: background 0.3s, color 0.3s;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body.dark-mode .contact-container {
+    background: #2a2a2a;
+}
+
+/* Heading inside the contact box */
+
+
+
+
+.contact-container h2 {
+    text-align: center;  /* centers the heading */
+    font-weight: bold;    /* makes it bold */
+    font-size: 1.8rem;   /* adjust size if needed */
+    color: #333;         /* heading color */
+    margin-bottom: 20px; /* space between heading and form */
+}
+
+
+body.dark-mode .contact-container h2 {
+    color: #fff;
+    /* text-align: center; */
+}
+
+/* Form inside the box */
+.contact-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* spacing between fields */
+}
+
+/* Labels */
+
+
+.contact-container label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+    text-align: left; /* ensures labels stay left-aligned */
+}
+
+
+
+body.dark-mode .contact-container label {
+    color: #ddd;
+}
+
+/* Inputs & Textarea */
+.contact-container input,
+.contact-container textarea {
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 90%;
+    transition: border 0.3s, background 0.3s;
+    margin-top: 12px;
+    
+}
+
+body.dark-mode .contact-container input,
+body.dark-mode .contact-container textarea {
+    background: #1e1e1e;
+    border: 1px solid #444;
+    color: #f1f1f1;
+}
+
+.contact-container textarea {
+    min-height: 120px;
+    resize: none;
+}
+
+/* Submit button inside the box */
+.contact-container button {
+    margin-top: 15px;
+    background: #007bff;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background 0.3s;
+}
+
+.contact-container button:hover {
+    background: #0056b3;
+}
+
+
+.contact-container {
+    margin-top: 20px;
+    padding: 50px 30px;
+    background: #fbfcfc;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(41, 35, 35, 0.1);
+    transition: background 0.3s, color 0.3s;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body.dark-mode .contact-container {
+    background: #2a2a2a;
+}
+
+/* Heading inside the contact box */
+
+
+
+
+.contact-container h2 {
+    text-align: center;  /* centers the heading */
+    font-weight: bold;    /* makes it bold */
+    font-size: 1.8rem;   /* adjust size if needed */
+    color: #333;         /* heading color */
+    margin-bottom: 20px; /* space between heading and form */
+}
+
+
+body.dark-mode .contact-container h2 {
+    color: #fff;
+    text-align: center;
+}
+
+/* Form inside the box */
+.contact-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* spacing between fields */
+}
+
+/* Labels */
+
+
+.contact-container label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+    text-align: left; /* ensures labels stay left-aligned */
+}
+
+
+
+body.dark-mode .contact-container label {
+    color: #ddd;
+}
+
+/* Inputs & Textarea */
+.contact-container input,
+.contact-container textarea {
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 90%;
+    transition: border 0.3s, background 0.3s;
+    margin-top: 12px;
+    
+}
+
+body.dark-mode .contact-container input,
+body.dark-mode .contact-container textarea {
+    background: #1e1e1e;
+    border: 1px solid #444;
+    color: #f1f1f1;
+}
+
+.contact-container textarea {
+    min-height: 120px;
+    resize: none;
+}
+
+/* Submit button inside the box */
+.contact-container button {
+    margin-top: 15px;
+    background: #007bff;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background 0.3s;
+}
+
+.contact-container button:hover {
+    background: #0056b3;
+}
+
